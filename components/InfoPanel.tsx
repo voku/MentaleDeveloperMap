@@ -1,7 +1,8 @@
 import React from 'react';
 import { MapLocation } from '../types';
 import { getIconComponent } from '../constants';
-import { ChevronLeft, ChevronRight, Map as MapIcon } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Map as MapIcon, Github } from 'lucide-react';
+import { APP_CONFIG } from '../config';
 
 interface InfoPanelProps {
   location: MapLocation | null;
@@ -77,6 +78,19 @@ const InfoPanel: React.FC<InfoPanelProps> = ({
                 Start Onboarding
             </button>
         </div>
+        
+        {/* GitHub Link */}
+        <div className="mt-4 pt-4 border-t border-slate-800">
+            <a 
+                href={APP_CONFIG.GITHUB_REPO_URL}
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 text-xs text-slate-400 hover:text-emerald-400 transition-colors"
+            >
+                <Github size={14} />
+                <span>Contribute on GitHub</span>
+            </a>
+        </div>
       </div>
     );
   }
@@ -114,30 +128,43 @@ const InfoPanel: React.FC<InfoPanelProps> = ({
       </div>
 
       {/* Footer Navigation */}
-      <div className="p-4 bg-slate-950/80 border-t border-slate-800 flex justify-between items-center">
-        <button 
-          onClick={onPrev}
-          disabled={!hasPrev}
-          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-            hasPrev 
-              ? 'text-slate-300 hover:bg-slate-800 hover:text-white' 
-              : 'text-slate-600 cursor-not-allowed'
-          }`}
-        >
-          Zurück
-        </button>
+      <div className="p-4 bg-slate-950/80 border-t border-slate-800">
+        <div className="flex justify-between items-center mb-3">
+          <button 
+            onClick={onPrev}
+            disabled={!hasPrev}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              hasPrev 
+                ? 'text-slate-300 hover:bg-slate-800 hover:text-white' 
+                : 'text-slate-600 cursor-not-allowed'
+            }`}
+          >
+            Zurück
+          </button>
+          
+          <button 
+            onClick={onNext}
+            disabled={!hasNext}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              hasNext 
+                ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg' 
+                : 'bg-slate-800 text-slate-500 cursor-not-allowed'
+            }`}
+          >
+            Weiter
+          </button>
+        </div>
         
-        <button 
-          onClick={onNext}
-          disabled={!hasNext}
-          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-            hasNext 
-              ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg' 
-              : 'bg-slate-800 text-slate-500 cursor-not-allowed'
-          }`}
+        {/* GitHub Link */}
+        <a 
+          href={APP_CONFIG.GITHUB_REPO_URL}
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="flex items-center justify-center gap-2 text-xs text-slate-500 hover:text-emerald-400 transition-colors pt-2 border-t border-slate-800"
         >
-          Weiter
-        </button>
+          <Github size={12} />
+          <span>Contribute on GitHub</span>
+        </a>
       </div>
     </div>
   );

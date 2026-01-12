@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="100" height="100" fill="#0f172a" rx="15"/>
+  
+  <!-- City buildings/nodes representation -->
+  <!-- Building 1 - Hexagon (Landmark) -->
+  <polygon points="30,35 40,30 50,35 50,45 40,50 30,45" fill="url(#grad)" stroke="#34d399" stroke-width="2"/>
+  
+  <!-- Building 2 - Circle (District) -->
+  <circle cx="70" cy="40" r="10" fill="url(#grad)" stroke="#34d399" stroke-width="2"/>
+  
+  <!-- Building 3 - Triangle (Danger) -->
+  <polygon points="50,70 60,85 40,85" fill="#be123c" stroke="#f43f5e" stroke-width="2"/>
+  
+  <!-- Connection lines -->
+  <line x1="45" y1="45" x2="62" y2="42" stroke="#334155" stroke-width="1.5"/>
+  <line x1="45" y1="50" x2="50" y2="70" stroke="#475569" stroke-width="1.5" stroke-dasharray="2,2"/>
+  
+  <!-- Network node in corner -->
+  <circle cx="80" cy="80" r="5" fill="#3b82f6" stroke="#93c5fd" stroke-width="1.5"/>
+</svg>
