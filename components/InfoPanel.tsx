@@ -2,6 +2,7 @@ import React from 'react';
 import { MapLocation } from '../types';
 import { getIconComponent } from '../constants';
 import { ChevronLeft, ChevronRight, Map as MapIcon, Github } from 'lucide-react';
+import { APP_CONFIG } from '../config';
 
 interface InfoPanelProps {
   location: MapLocation | null;
@@ -81,7 +82,7 @@ const InfoPanel: React.FC<InfoPanelProps> = ({
         {/* GitHub Link */}
         <div className="mt-4 pt-4 border-t border-slate-800">
             <a 
-                href="https://github.com/voku/MentaleDeveloperMap" 
+                href={APP_CONFIG.GITHUB_REPO_URL}
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 text-xs text-slate-400 hover:text-emerald-400 transition-colors"
@@ -156,7 +157,7 @@ const InfoPanel: React.FC<InfoPanelProps> = ({
         
         {/* GitHub Link */}
         <a 
-          href="https://github.com/voku/MentaleDeveloperMap" 
+          href={APP_CONFIG.GITHUB_REPO_URL}
           target="_blank" 
           rel="noopener noreferrer"
           className="flex items-center justify-center gap-2 text-xs text-slate-500 hover:text-emerald-400 transition-colors pt-2 border-t border-slate-800"
