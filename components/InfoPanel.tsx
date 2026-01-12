@@ -55,7 +55,7 @@ const InfoPanel: React.FC<InfoPanelProps> = ({
           Vergiss die offiziellen Architektur-Diagramme im Wiki. Das hier ist die Realität.
         </p>
         <p className="text-sm leading-relaxed mb-6">
-          Wenn ich die Augen schließe, sehe ich den Code nicht als Dateien, sondern als Orte. Manche sind hell und sicher, andere dunkel und gefährlich. Das hier ist meine Karte nach 5 Jahren "git blame" und unzähligen Hotfixes um 3 Uhr nachts.
+          Nach einiger Zeit fängt der Kopf an, Lücken selbst zu schließen. Nicht im Sinne von "ich erfinde was" wie ein LLM, sondern eher so wie eine mentale Stadtkarte: Ich kenne nicht jede Straße, aber ich weiß, in welchem Viertel ich gerade bin und welche Abkürzungen es gibt.
         </p>
         <div className="space-y-3 mb-6 bg-slate-950/50 p-4 rounded-lg border border-slate-800">
             <div className="flex items-center gap-2 text-xs text-slate-400">
