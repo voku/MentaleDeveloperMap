@@ -1,12 +1,30 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import CityMap from './components/CityMap';
 import InfoPanel from './components/InfoPanel';
-import { CITY_DATA } from './constants';
 import { MapLocation } from './types';
+import { Language, getTranslatedLocationData } from './translations';
 
 function App() {
+  // Initialize language from localStorage or default to German
+  const [language, setLanguage] = useState<Language>(() => {
+    const saved = localStorage.getItem('mentalemap-language');
+    return (saved === 'en' || saved === 'de') ? saved : 'de';
+  });
+  
   const [activeLocationId, setActiveLocationId] = useState<string | null>(null);
   const [isPanelOpen, setIsPanelOpen] = useState(true);
+  
+  // Get translated location data based on current language
+  const CITY_DATA = getTranslatedLocationData(language);
+  
+  // Save language preference to localStorage
+  useEffect(() => {
+    localStorage.setItem('mentalemap-language', language);
+  }, [language]);
+  
+  const toggleLanguage = useCallback(() => {
+    setLanguage(prev => prev === 'de' ? 'en' : 'de');
+  }, []);
 
   const activeLocation = activeLocationId 
     ? CITY_DATA.find(l => l.id === activeLocationId) || null 
@@ -50,6 +68,7 @@ function App() {
           activeLocation={activeLocation} 
           onSelect={handleSelect} 
           isPanelOpen={isPanelOpen}
+          locations={CITY_DATA}
         />
         
         {/* Info Panel Overlay */}
@@ -61,6 +80,8 @@ function App() {
             hasPrev={hasPrev}
             isVisible={isPanelOpen}
             onToggle={() => setIsPanelOpen(!isPanelOpen)}
+            language={language}
+            onLanguageToggle={toggleLanguage}
         />
       </div>
     </div>
