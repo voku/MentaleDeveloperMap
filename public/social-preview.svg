@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e293b;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+  
+  <!-- Grid pattern for tech feel -->
+  <g opacity="0.1">
+    <line x1="0" y1="157.5" x2="1200" y2="157.5" stroke="#64748b" stroke-width="1"/>
+    <line x1="0" y1="315" x2="1200" y2="315" stroke="#64748b" stroke-width="1"/>
+    <line x1="0" y1="472.5" x2="1200" y2="472.5" stroke="#64748b" stroke-width="1"/>
+    <line x1="300" y1="0" x2="300" y2="630" stroke="#64748b" stroke-width="1"/>
+    <line x1="600" y1="0" x2="600" y2="630" stroke="#64748b" stroke-width="1"/>
+    <line x1="900" y1="0" x2="900" y2="630" stroke="#64748b" stroke-width="1"/>
+  </g>
+  
+  <!-- Left side: Interactive city visualization -->
+  <g transform="translate(120, 150)">
+    <!-- Large landmark hexagon -->
+    <polygon points="100,80 160,50 220,80 220,140 160,170 100,140" 
+             fill="url(#greenGrad)" stroke="#34d399" stroke-width="4" opacity="0.9"/>
+    
+    <!-- Medium circle district -->
+    <circle cx="320" cy="110" r="50" 
+            fill="url(#blueGrad)" stroke="#60a5fa" stroke-width="4" opacity="0.9"/>
+    
+    <!-- Small danger zone triangle -->
+    <polygon points="180,240 240,320 120,320" 
+             fill="#be123c" stroke="#f43f5e" stroke-width="3" opacity="0.9"/>
+    
+    <!-- Connection lines -->
+    <line x1="180" y1="140" x2="280" y2="120" stroke="#475569" stroke-width="3"/>
+    <line x1="200" y1="180" x2="180" y2="240" stroke="#475569" stroke-width="2" stroke-dasharray="6,6"/>
+    <line x1="270" y1="130" x2="320" y2="160" stroke="#475569" stroke-width="2"/>
+    
+    <!-- Network nodes -->
+    <circle cx="80" cy="300" r="18" fill="#3b82f6" stroke="#93c5fd" stroke-width="3"/>
+    <circle cx="340" cy="280" r="18" fill="#10b981" stroke="#6ee7b7" stroke-width="3"/>
+    
+    <!-- Pulse effect circles -->
+    <circle cx="160" cy="110" r="8" fill="#fbbf24" opacity="0.8"/>
+    <circle cx="320" cy="110" r="8" fill="#fbbf24" opacity="0.8"/>
+  </g>
+  
+  <!-- Right side: Text content -->
+  <g transform="translate(580, 140)">
+    <!-- Title -->
+    <text x="0" y="0" font-family="'Inter', sans-serif" font-size="68" font-weight="800" fill="#e2e8f0" letter-spacing="-1">
+      Mentale Developer
+    </text>
+    <text x="0" y="72" font-family="'Inter', sans-serif" font-size="68" font-weight="800" fill="#10b981" letter-spacing="-1">
+      Map
+    </text>
+    
+    <!-- Subtitle -->
+    <text x="0" y="140" font-family="'Inter', sans-serif" font-size="28" font-weight="400" fill="#94a3b8" letter-spacing="0">
+      Navigate complex codebases
+    </text>
+    <text x="0" y="180" font-family="'Inter', sans-serif" font-size="28" font-weight="400" fill="#94a3b8" letter-spacing="0">
+      through mental models
+    </text>
+    
+    <!-- Feature badges -->
+    <g transform="translate(0, 240)">
+      <rect x="0" y="0" width="160" height="40" rx="20" fill="#334155"/>
+      <text x="80" y="27" font-family="'Inter', sans-serif" font-size="18" font-weight="600" 
+            fill="#10b981" text-anchor="middle">Interactive</text>
+    </g>
+    
+    <g transform="translate(180, 240)">
+      <rect x="0" y="0" width="140" height="40" rx="20" fill="#334155"/>
+      <text x="70" y="27" font-family="'Inter', sans-serif" font-size="18" font-weight="600" 
+            fill="#3b82f6" text-anchor="middle">Intuitive</text>
+    </g>
+    
+    <g transform="translate(340, 240)">
+      <rect x="0" y="0" width="180" height="40" rx="20" fill="#334155"/>
+      <text x="90" y="27" font-family="'Inter', sans-serif" font-size="18" font-weight="600" 
+            fill="#f59e0b" text-anchor="middle">Educational</text>
+    </g>
+    
+    <!-- Tech stack indicators -->
+    <text x="0" y="330" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="400" 
+          fill="#64748b" letter-spacing="1">React • TypeScript • Vite</text>
+  </g>
+  
+  <!-- Decorative code brackets in background -->
+  <g opacity="0.15">
+    <text x="50" y="80" font-family="'JetBrains Mono', monospace" font-size="48" fill="#10b981">&lt;/&gt;</text>
+    <text x="1080" y="580" font-family="'JetBrains Mono', monospace" font-size="48" fill="#3b82f6">{ }</text>
+  </g>
+</svg>
