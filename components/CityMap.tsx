@@ -1,14 +1,16 @@
 import React, { useMemo } from 'react';
-import { CITY_DATA, getIconComponent } from '../constants';
+import { getIconComponent } from '../constants';
 import { MapLocation, LocationType } from '../types';
 
 interface CityMapProps {
   activeLocation: MapLocation | null;
   onSelect: (location: MapLocation) => void;
   isPanelOpen: boolean;
+  locations: MapLocation[];
 }
 
-const CityMap: React.FC<CityMapProps> = ({ activeLocation, onSelect, isPanelOpen }) => {
+const CityMap: React.FC<CityMapProps> = ({ activeLocation, onSelect, isPanelOpen, locations }) => {
+  const CITY_DATA = locations;
   // CONFIGURATION
   // We widen the viewBox to 1400 to account for the sidebar
   const viewBoxWidth = 1400;

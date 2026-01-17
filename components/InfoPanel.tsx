@@ -1,8 +1,9 @@
 import React from 'react';
 import { MapLocation } from '../types';
 import { getIconComponent } from '../constants';
-import { ChevronLeft, ChevronRight, Map as MapIcon, Github } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Map as MapIcon, Github, Languages } from 'lucide-react';
 import { APP_CONFIG } from '../config';
+import { Language, translations } from '../translations';
 
 interface InfoPanelProps {
   location: MapLocation | null;
@@ -12,6 +13,10 @@ interface InfoPanelProps {
   hasPrev: boolean;
   isVisible: boolean;
   onToggle: () => void;
+  language: Language;
+  onLanguageToggle: () => void;
+  currentIndex: number;
+  totalLocations: number;
 }
 
 const InfoPanel: React.FC<InfoPanelProps> = ({ 
@@ -21,19 +26,36 @@ const InfoPanel: React.FC<InfoPanelProps> = ({
     hasNext, 
     hasPrev, 
     isVisible, 
-    onToggle 
+    onToggle,
+    language,
+    onLanguageToggle,
+    currentIndex,
+    totalLocations
 }) => {
+  const t = translations[language];
 
   // Collapsed State
   if (!isVisible) {
     return (
-        <button 
-            onClick={onToggle}
-            className="absolute top-4 left-4 z-20 p-3 bg-slate-900/90 hover:bg-emerald-600 border border-slate-700 hover:border-emerald-500 rounded-lg text-slate-300 hover:text-white shadow-xl transition-all duration-300 group"
-            title="Show Panel"
-        >
-            <MapIcon size={24} className="group-hover:scale-110 transition-transform" />
-        </button>
+        <>
+            <button 
+                onClick={onToggle}
+                className="absolute top-4 left-4 z-20 p-3 bg-slate-900/90 hover:bg-emerald-600 border border-slate-700 hover:border-emerald-500 rounded-lg text-slate-300 hover:text-white shadow-xl transition-all duration-300 group"
+                title={t.showPanel}
+            >
+                <MapIcon size={24} className="group-hover:scale-110 transition-transform" />
+            </button>
+            
+            {/* Language Switcher when panel is collapsed */}
+            <button 
+                onClick={onLanguageToggle}
+                className="absolute top-4 left-20 z-20 px-3 py-3 bg-slate-900/90 hover:bg-blue-600 border border-slate-700 hover:border-blue-500 rounded-lg text-slate-300 hover:text-white shadow-xl transition-all duration-300 group flex items-center gap-2"
+                title={`Switch to ${language === 'de' ? 'English' : 'Deutsch'}`}
+            >
+                <Languages size={20} className="group-hover:scale-110 transition-transform" />
+                <span className="text-xs font-mono font-bold">{language === 'de' ? 'EN' : 'DE'}</span>
+            </button>
+        </>
     );
   }
 
@@ -42,31 +64,42 @@ const InfoPanel: React.FC<InfoPanelProps> = ({
     return (
       <div className="absolute top-4 left-4 z-10 w-80 md:w-96 bg-slate-900/90 backdrop-blur-md border border-slate-700 p-6 rounded-xl shadow-2xl text-slate-300 animate-in fade-in slide-in-from-left-4 duration-300">
         <div className="flex justify-between items-start mb-2">
-            <h1 className="text-2xl font-bold text-white font-mono">Mentale Karte: ERP Core</h1>
-            <button 
-                onClick={onToggle}
-                className="p-1 hover:bg-slate-800 rounded-md transition-colors text-slate-500 hover:text-white"
-            >
-                <ChevronLeft size={20} />
-            </button>
+            <h1 className="text-2xl font-bold text-white font-mono">{t.introTitle}</h1>
+            <div className="flex items-center gap-1">
+                {/* Language Switcher */}
+                <button 
+                    onClick={onLanguageToggle}
+                    className="p-1 hover:bg-blue-600 rounded-md transition-colors text-slate-400 hover:text-white flex items-center gap-1"
+                    title={`Switch to ${language === 'de' ? 'English' : 'Deutsch'}`}
+                >
+                    <Languages size={16} />
+                    <span className="text-xs font-mono">{language === 'de' ? 'EN' : 'DE'}</span>
+                </button>
+                <button 
+                    onClick={onToggle}
+                    className="p-1 hover:bg-slate-800 rounded-md transition-colors text-slate-500 hover:text-white"
+                >
+                    <ChevronLeft size={20} />
+                </button>
+            </div>
         </div>
         
         <p className="text-sm leading-relaxed mb-4">
-          Vergiss die offiziellen Architektur-Diagramme im Wiki. Das hier ist die Realität.
+          {t.introDescription1}
         </p>
         <p className="text-sm leading-relaxed mb-6">
-          Nach einiger Zeit fängt der Kopf an, Lücken selbst zu schließen. Nicht im Sinne von "ich erfinde was" wie ein LLM, sondern eher so wie eine mentale Stadtkarte: Ich kenne nicht jede Straße, aber ich weiß, in welchem Viertel ich gerade bin und welche Abkürzungen es gibt.
+          {t.introDescription2}
         </p>
         <div className="space-y-3 mb-6 bg-slate-950/50 p-4 rounded-lg border border-slate-800">
             <div className="flex items-center gap-2 text-xs text-slate-400">
                 <span className="w-2 h-2 bg-rose-500 rounded-full"></span>
-                <span className="font-semibold">Der Westen (Legacy):</span>
-                <span>Code, den wir fürchten.</span>
+                <span className="font-semibold">{t.legendWest}</span>
+                <span>{t.legendWestDesc}</span>
             </div>
             <div className="flex items-center gap-2 text-xs text-slate-400">
                 <span className="w-2 h-2 bg-emerald-500 rounded-full"></span>
-                <span className="font-semibold">Der Osten (Mindset):</span>
-                <span>Wie wir überleben.</span>
+                <span className="font-semibold">{t.legendEast}</span>
+                <span>{t.legendEastDesc}</span>
             </div>
         </div>
         
@@ -75,7 +108,7 @@ const InfoPanel: React.FC<InfoPanelProps> = ({
                 onClick={onNext}
                 className="px-6 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-full font-semibold transition-all shadow-[0_0_15px_rgba(16,185,129,0.4)]"
             >
-                Start Onboarding
+                {t.startButton}
             </button>
         </div>
         
@@ -88,7 +121,7 @@ const InfoPanel: React.FC<InfoPanelProps> = ({
                 className="flex items-center justify-center gap-2 text-xs text-slate-400 hover:text-emerald-400 transition-colors"
             >
                 <Github size={14} />
-                <span>Contribute on GitHub</span>
+                <span>{t.contributeText}</span>
             </a>
         </div>
       </div>
@@ -108,15 +141,26 @@ const InfoPanel: React.FC<InfoPanelProps> = ({
                 </div>
                 <h2 className="text-xl font-bold text-white font-mono">{location.title}</h2>
             </div>
-            <button 
-                onClick={onToggle}
-                className="p-1 hover:bg-slate-800 rounded-md transition-colors text-slate-500 hover:text-white"
-            >
-                <ChevronLeft size={20} />
-            </button>
+            <div className="flex items-center gap-1">
+                {/* Language Switcher */}
+                <button 
+                    onClick={onLanguageToggle}
+                    className="p-1 hover:bg-blue-600 rounded-md transition-colors text-slate-400 hover:text-white flex items-center gap-1"
+                    title={`Switch to ${language === 'de' ? 'English' : 'Deutsch'}`}
+                >
+                    <Languages size={16} />
+                    <span className="text-xs font-mono">{language === 'de' ? 'EN' : 'DE'}</span>
+                </button>
+                <button 
+                    onClick={onToggle}
+                    className="p-1 hover:bg-slate-800 rounded-md transition-colors text-slate-500 hover:text-white"
+                >
+                    <ChevronLeft size={20} />
+                </button>
+            </div>
         </div>
         <p className={`text-sm font-medium ${location.type === 'DANGER' ? 'text-rose-400' : 'text-emerald-400'}`}>
-            {location.type === 'DANGER' ? 'CRITICAL ZONE' : location.type}
+            {location.type === 'DANGER' ? t.criticalZone : location.type}
         </p>
       </div>
 
@@ -129,29 +173,56 @@ const InfoPanel: React.FC<InfoPanelProps> = ({
 
       {/* Footer Navigation */}
       <div className="p-4 bg-slate-950/80 border-t border-slate-800">
-        <div className="flex justify-between items-center mb-3">
+        {/* Progress Indicator */}
+        <div className="mb-3 text-center">
+          <div className="flex justify-center items-center gap-2 mb-2">
+            <span className="text-xs font-mono text-slate-500">
+              {currentIndex + 1} / {totalLocations}
+            </span>
+          </div>
+          <div className="flex justify-center gap-1">
+            {Array.from({ length: totalLocations }).map((_, idx) => (
+              <div
+                key={idx}
+                className={`h-1 rounded-full transition-all duration-300 ${
+                  idx === currentIndex 
+                    ? 'w-8 bg-emerald-500' 
+                    : idx < currentIndex 
+                    ? 'w-2 bg-slate-600' 
+                    : 'w-2 bg-slate-700'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+        
+        <div className="flex justify-between items-center gap-2 mb-3">
           <button 
             onClick={onPrev}
             disabled={!hasPrev}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
               hasPrev 
-                ? 'text-slate-300 hover:bg-slate-800 hover:text-white' 
-                : 'text-slate-600 cursor-not-allowed'
+                ? 'text-slate-300 hover:bg-slate-800 hover:text-white border border-slate-700 hover:border-slate-600' 
+                : 'text-slate-600 cursor-not-allowed border border-slate-800'
             }`}
+            title="Previous (← or ↑)"
           >
-            Zurück
+            <ChevronLeft size={16} />
+            <span>{t.prevButton}</span>
           </button>
           
           <button 
             onClick={onNext}
             disabled={!hasNext}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
               hasNext 
-                ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg' 
+                ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg hover:shadow-emerald-500/50' 
                 : 'bg-slate-800 text-slate-500 cursor-not-allowed'
             }`}
+            title="Next (→ or ↓)"
           >
-            Weiter
+            <span>{t.nextButton}</span>
+            <ChevronRight size={16} />
           </button>
         </div>
         
@@ -163,7 +234,7 @@ const InfoPanel: React.FC<InfoPanelProps> = ({
           className="flex items-center justify-center gap-2 text-xs text-slate-500 hover:text-emerald-400 transition-colors pt-2 border-t border-slate-800"
         >
           <Github size={12} />
-          <span>Contribute on GitHub</span>
+          <span>{t.contributeText}</span>
         </a>
       </div>
     </div>
