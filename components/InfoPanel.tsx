@@ -15,6 +15,8 @@ interface InfoPanelProps {
   onToggle: () => void;
   language: Language;
   onLanguageToggle: () => void;
+  currentIndex: number;
+  totalLocations: number;
 }
 
 const InfoPanel: React.FC<InfoPanelProps> = ({ 
@@ -26,7 +28,9 @@ const InfoPanel: React.FC<InfoPanelProps> = ({
     isVisible, 
     onToggle,
     language,
-    onLanguageToggle
+    onLanguageToggle,
+    currentIndex,
+    totalLocations
 }) => {
   const t = translations[language];
 
@@ -169,29 +173,56 @@ const InfoPanel: React.FC<InfoPanelProps> = ({
 
       {/* Footer Navigation */}
       <div className="p-4 bg-slate-950/80 border-t border-slate-800">
-        <div className="flex justify-between items-center mb-3">
+        {/* Progress Indicator */}
+        <div className="mb-3 text-center">
+          <div className="flex justify-center items-center gap-2 mb-2">
+            <span className="text-xs font-mono text-slate-500">
+              {currentIndex + 1} / {totalLocations}
+            </span>
+          </div>
+          <div className="flex justify-center gap-1">
+            {Array.from({ length: totalLocations }).map((_, idx) => (
+              <div
+                key={idx}
+                className={`h-1 rounded-full transition-all duration-300 ${
+                  idx === currentIndex 
+                    ? 'w-8 bg-emerald-500' 
+                    : idx < currentIndex 
+                    ? 'w-2 bg-slate-600' 
+                    : 'w-2 bg-slate-700'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+        
+        <div className="flex justify-between items-center gap-2 mb-3">
           <button 
             onClick={onPrev}
             disabled={!hasPrev}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
               hasPrev 
-                ? 'text-slate-300 hover:bg-slate-800 hover:text-white' 
-                : 'text-slate-600 cursor-not-allowed'
+                ? 'text-slate-300 hover:bg-slate-800 hover:text-white border border-slate-700 hover:border-slate-600' 
+                : 'text-slate-600 cursor-not-allowed border border-slate-800'
             }`}
+            title="Previous (← or ↑)"
           >
-            {t.prevButton}
+            <ChevronLeft size={16} />
+            <span>{t.prevButton}</span>
           </button>
           
           <button 
             onClick={onNext}
             disabled={!hasNext}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
               hasNext 
-                ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg' 
+                ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg hover:shadow-emerald-500/50' 
                 : 'bg-slate-800 text-slate-500 cursor-not-allowed'
             }`}
+            title="Next (→ or ↓)"
           >
-            {t.nextButton}
+            <span>{t.nextButton}</span>
+            <ChevronRight size={16} />
           </button>
         </div>
         

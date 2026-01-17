@@ -5,10 +5,10 @@ import { MapLocation } from './types';
 import { Language, getTranslatedLocationData } from './translations';
 
 function App() {
-  // Initialize language from localStorage or default to German
+  // Initialize language from localStorage or default to English
   const [language, setLanguage] = useState<Language>(() => {
     const saved = localStorage.getItem('mentalemap-language');
-    return (saved === 'en' || saved === 'de') ? saved : 'de';
+    return (saved === 'en' || saved === 'de') ? saved : 'en';
   });
   
   const [activeLocationId, setActiveLocationId] = useState<string | null>(null);
@@ -45,7 +45,7 @@ function App() {
     if (currentIndex < CITY_DATA.length - 1) {
       setActiveLocationId(CITY_DATA[currentIndex + 1].id);
     }
-  }, [activeLocationId]);
+  }, [activeLocationId, CITY_DATA]);
 
   const handlePrev = useCallback(() => {
     if (!activeLocationId) return;
@@ -53,7 +53,25 @@ function App() {
     if (currentIndex > 0) {
       setActiveLocationId(CITY_DATA[currentIndex - 1].id);
     }
-  }, [activeLocationId]);
+  }, [activeLocationId, CITY_DATA]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        handleNext();
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        handlePrev();
+      } else if (e.key === 'Escape') {
+        setIsPanelOpen(false);
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [handleNext, handlePrev]);
 
   // Determine navigation state
   const currentIndex = activeLocationId ? CITY_DATA.findIndex(l => l.id === activeLocationId) : -1;
@@ -82,6 +100,8 @@ function App() {
             onToggle={() => setIsPanelOpen(!isPanelOpen)}
             language={language}
             onLanguageToggle={toggleLanguage}
+            currentIndex={currentIndex}
+            totalLocations={CITY_DATA.length}
         />
       </div>
     </div>
